@@ -1,6 +1,28 @@
 #include <iostream>
 #include <string>
-#include <cmath>
+
+const int powerOfNum(const int& num, const int& power)
+{
+    if (power > 0) {
+        int result = num;
+        for (unsigned count = 1; count != power; ++count) {
+            result *= num;
+        }
+        return result;
+    }
+    return 1;
+}
+
+const bool isOnlyBinary(const std::string& s)
+{
+    bool onlyBinary = true;
+    for (std::string::size_type index = 0; index != s.size() && onlyBinary; ++index) {
+        if (s[index] != '0' && s[index] != '1') {
+            onlyBinary = false;
+        }
+    }
+    return onlyBinary;
+}
 
 class Binary
 {
@@ -10,6 +32,7 @@ public:
     Binary(const long long unsigned& decVal) {
         binaryValue = decToBin(decVal);
     }
+    Binary(const std::string&);
 
     const std::string decToBin(const long long unsigned&) const;
     std::ostream& print(std::ostream&) const;
@@ -22,6 +45,15 @@ private:
     std::string binaryValue;
 };
 
+Binary::Binary(const std::string& s)
+{
+    if (isOnlyBinary(s)) {
+        binaryValue = s;
+    }
+    else {
+        binaryValue = "0";
+    }
+}
 const std::string Binary::decToBin(const long long unsigned& decVal) const {
     bool hasOne = false;
     std::string binary;
@@ -58,25 +90,23 @@ Binary& Binary::assignIt(std::string& assignedBinaryValue) {
     return *this;
 }
 
-
 const unsigned binToDec(const Binary& obj) {
     std::string binary = obj.getValue();
     unsigned sz = binary.size();
     unsigned decimal = 0;
     for (int index = 0; index != sz; ++index) {
         if (binary[index] == '1') {
-            decimal += pow(2, int(sz)-index-1);
+            decimal += powerOfNum(2, int(sz)-index-1);
         }
     }
     return decimal;
 }
-
 const unsigned binToDec(const std::string& binary) {
     unsigned sz = binary.size();
     unsigned decimal = 0;
     for (int index = 0; index != sz; ++index) {
         if (binary[index] == '1') {
-            decimal += pow(2, int(sz)-index-1);
+            decimal += powerOfNum(2, int(sz)-index-1);
         }
     }
     return decimal;
@@ -85,4 +115,14 @@ const unsigned binToDec(const std::string& binary) {
 Binary andOP(const Binary& obj1, const Binary& obj2) {
     Binary andOP(binToDec(obj1.getValue()) & binToDec(obj2.getValue()));
     return andOP;
+}
+
+int main() {
+    
+    std::string val = "1011011011";
+    Binary num(val);
+    num.print(std::cout) << std::endl;
+    std::cout << binToDec(val);
+    
+    return 0;
 }
