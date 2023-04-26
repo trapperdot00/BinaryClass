@@ -11,19 +11,21 @@ class Binary {
     friend const unsigned binToDec(const Binary&);
 public:
     Binary() = default;
-    Binary(const long long unsigned& decVal) {
-        binaryValue = decToBin(decVal);
-    }
+    Binary(const long long unsigned& decVal);
     Binary(const std::string&);
     Binary(const char*);
 
-    std::ostream& print(std::ostream&) const;
-    const std::string& getValue() const { return binaryValue; }
-
+    std::ostream& printBin(std::ostream&) const;
+    std::ostream& printDec(std::ostream&) const;
+    std::istream& readBin(std::istream&);
+    std::istream& readDec(std::istream&);
+    const std::string& getValueBin() const { return binaryValue; }
+    const unsigned getValueDec() const;
 private:
-    std::string binaryValue;
+    std::string binaryValue = "0";
     const std::string strip(const std::string&) const;
     const char* strip(const char*) const;
+    const bool isBinaryString(const std::string& s) const;
 
 };
 
