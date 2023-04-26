@@ -119,18 +119,39 @@ const unsigned binToDec(const std::string& binary) {
     return decimal;
 }
 
+const std::string strip(const std::string& s)
+{
+    bool hasOne = false;
+    std::string newStr;
+    for (std::string::size_type index = 0; index != s.size(); ++index) {
+        if (!hasOne) {
+            if (s[index] == '1') {
+                hasOne = true;
+                newStr += '1';
+            }
+        }
+        else {
+            newStr += s[index];
+        }
+    }
+    return newStr;
+}
+
 Binary andOP(const Binary& obj1, const Binary& obj2) {
     Binary andOP(binToDec(obj1.getValue()) & binToDec(obj2.getValue()));
     return andOP;
 }
 
 int main() {
-    
-    //std::string val = "aasdad";
-    Binary num("011101");
+    /*
+    Binary num("1001");
+    //Binary num("11101");
     num.print(std::cout) << std::endl;
     std::cout << binToDec(num);
-    
+    */
+    std::string val("000100100");
+    std::cout << strip(val);
     return 0;
 }
 // TODO: remove 0s from start of binaryValue in constructors
+//       remove assignIt functions
