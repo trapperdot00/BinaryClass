@@ -33,6 +33,7 @@ public:
         binaryValue = decToBin(decVal);
     }
     Binary(const std::string&);
+    Binary(const char*);
 
     const std::string decToBin(const long long unsigned&) const;
     std::ostream& print(std::ostream&) const;
@@ -45,6 +46,12 @@ private:
     std::string binaryValue;
 };
 
+Binary::Binary(const char* c)
+{
+    while (*c) {
+        binaryValue += *c++;
+    }
+}
 Binary::Binary(const std::string& s)
 {
     if (isOnlyBinary(s)) {
@@ -119,10 +126,11 @@ Binary andOP(const Binary& obj1, const Binary& obj2) {
 
 int main() {
     
-    std::string val = "1011011011";
-    Binary num(val);
+    //std::string val = "aasdad";
+    Binary num("011101");
     num.print(std::cout) << std::endl;
-    std::cout << binToDec(val);
+    std::cout << binToDec(num);
     
     return 0;
 }
+// TODO: remove 0s from start of binaryValue in constructors
