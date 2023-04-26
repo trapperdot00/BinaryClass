@@ -10,9 +10,10 @@ The class can be initialized using decimal values (ints), or by string values, w
 <p><i>Binary num1(16);<br>Binary num2("101001");</i></p>
 
 <h4>Class Member Functions:</h4>
-<p>Two member functions exist for the Binary class: getValue() and print().<br>
-<i>getValue()</i> returns the object's binary value, <i>print()</i> outputs the binary value to the standard output, and returns an <i>std::ostream&</i> to allow such chaining of commands:</p>
-<p><i>num1.print(std::cout) << std::endl;</i></p>
+<p><i>readBin()</i> reads binary value into the object's binary value, <i>readDec()</i> reads decimal value which then is converted to binary, and assigned to the object.<br>
+<i>getValueBin()</i> returns the object's binary value, <i>getValueDec()</i> returns its decimal value.<br>
+<i>print()</i> outputs the binary value to the standard output, and returns an <i>std::ostream&</i> to allow such chaining of commands:</p>
+<p><i>num1.print(std::cout) << " - Object's binary value." << std::endl;</i></p>
 
 <h4>Non-member functions:</h4>
 <p>The non-member functions are used for conversion between binary and decimal numbers.<br>
