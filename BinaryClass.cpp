@@ -29,6 +29,9 @@ std::istream& Binary::readBin(std::istream& is) {
     if (is >> userInput && isBinaryString(userInput)) {
         binaryValue = strip(userInput);
     }
+    else {
+        std::cerr << "Error: input not binary!" << std::endl;
+    }
     return is;
 }
 std::istream& Binary::readDec(std::istream& is) {
