@@ -4,23 +4,31 @@ using std::cout;
 using std::cin;
 using std::endl;
 
+void printNumData(const Binary* p) {
+    cout << "Decimal value: " << p->getValueDec() << '\n';
+    cout << "Binary value: " << p->getValueBin() << "\n\n";
+}
+
 int main()
 {
     Binary *num = new Binary;
+    char choice;
+    cout << "Enter base (b, d) and value." << "\n\n";
     do {
-        cout << "Enter binary value: ";
-        if (!num->readBin(cin))
+        if (!(cin >> choice))
             break;
-        cout << "Decimal value: " << num->getValueDec() << endl;
-        cout << "Binary value: " << num->getValueBin() << endl;
-        cout << endl;
-        cout << "Enter decimal value: ";
-        if (!num->readDec(cin))
-            break;
-        cout << "Decimal value: " << num->getValueDec() << endl;
-        cout << "Binary value: " << num->getValueBin() << endl;
-        cout << endl;
 
+        if (choice == 'b') {
+            if (!num->readBin(cin)) {
+                break;
+            }
+            printNumData(num);
+        }
+        else if (choice == 'd') {
+            if (!num->readDec(cin))
+                break;
+            printNumData(num);
+        }
     } while (cin);
     delete num;
     return 0;

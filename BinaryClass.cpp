@@ -29,12 +29,19 @@ std::istream& Binary::readBin(std::istream& is) {
     if (is >> userInput && isBinaryString(userInput)) {
         binaryValue = strip(userInput);
     }
+    else {
+        std::cerr << "Error: input not binary!" << std::endl;
+        is.setstate(is.rdstate() | is.failbit);
+    }
     return is;
 }
 std::istream& Binary::readDec(std::istream& is) {
     unsigned userInput;
     if (is >> userInput) {
         binaryValue = decToBin(userInput);
+    } else {
+        std::cerr << "Error: input not decimal!" << std::endl;
+        is.setstate(is.rdstate() | is.failbit);
     }
     return is;
 }
