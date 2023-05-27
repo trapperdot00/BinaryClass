@@ -8,6 +8,10 @@ void printNumData(const Binary* p) {
     cout << "Decimal value: " << p->getValueDec() << '\n';
     cout << "Binary value: " << p->getValueBin() << "\n\n";
 }
+void printNumData(const Binary b) {
+    cout << "Decimal value: " << b.getValueDec() << '\n';
+    cout << "Binary value: " << b.getValueBin() << "\n\n";
+}
 
 int main()
 {
@@ -31,5 +35,6 @@ int main()
         }
     } while (cin);
     delete num;
+
     return 0;
 }
