@@ -4,12 +4,12 @@
 class Binary;
 
 const std::string decToBin(const long long unsigned&);
-const unsigned binToDec(const std::string&);
-const unsigned binToDec(const Binary&);
-const int powerOfNum(const int&, const int&);
+const unsigned long long binToDec(const std::string&);
+const unsigned long long binToDec(const Binary&);
+const unsigned long long powerOfNum(const unsigned long long&, const short&);
 
 class Binary {
-    friend const unsigned binToDec(const Binary&);
+    friend const unsigned long long binToDec(const Binary&);
 
 public:
     explicit Binary(const long long unsigned& decVal);
@@ -22,7 +22,7 @@ public:
     std::istream& readBin(std::istream&);
     std::istream& readDec(std::istream&);
     const std::string& getValueBin() const { return binaryValue; }
-    const unsigned getValueDec() const;
+    const unsigned long long getValueDec() const;
 
 private:
     const std::string strip(const std::string&) const;

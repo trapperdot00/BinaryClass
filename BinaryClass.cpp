@@ -24,7 +24,7 @@ std::ostream& Binary::printDec(std::ostream& os) const {
 }
 std::istream& Binary::readBin(std::istream& is) {
     std::string userInput;
-    if (is >> userInput && isBinaryString(userInput)) {
+    if (is >> userInput && isBinaryString(userInput) && userInput.size() <= 64) {
         binaryValue = strip(userInput);
     }
     else {
@@ -33,8 +33,8 @@ std::istream& Binary::readBin(std::istream& is) {
     return is;
 }
 std::istream& Binary::readDec(std::istream& is) {
-    long long int userInput;
-    if (is >> userInput && userInput >= 0 && userInput <= UINT_MAX) {
+    unsigned long long userInput;
+    if (is >> userInput && userInput >= 0) {
         binaryValue = decToBin(userInput);
     } else {
         is.setstate(is.rdstate() | is.failbit);
@@ -42,7 +42,7 @@ std::istream& Binary::readDec(std::istream& is) {
     return is;
 }
 
-const unsigned Binary::getValueDec() const {
+const unsigned long long Binary::getValueDec() const {
     return binToDec(binaryValue);
 }
 
@@ -104,8 +104,8 @@ const std::string decToBin(const long long unsigned& decVal) {
     }
     return binary.size() ? binary : "0";
 }
-const unsigned binToDec(const std::string& binary) {
-    unsigned decimal = 0;
+const unsigned long long binToDec(const std::string& binary) {
+    unsigned long long decimal = 0;
     for (std::string::size_type index = 0; index != binary.size(); ++index) {
         if (binary[index] == '1') {
             decimal += powerOfNum(2, binary.size()-index-1);
@@ -113,10 +113,10 @@ const unsigned binToDec(const std::string& binary) {
     }
     return decimal;
 }
-const unsigned binToDec(const Binary& obj) {
+const unsigned long long binToDec(const Binary& obj) {
     std::string binary = obj.getValueBin();
     unsigned sz = binary.size();
-    unsigned decimal = 0;
+    unsigned long long decimal = 0;
     for (unsigned index = 0; index != sz; ++index) {
         if (binary[index] == '1') {
             decimal += powerOfNum(2, int(sz)-index-1);
@@ -124,10 +124,10 @@ const unsigned binToDec(const Binary& obj) {
     }
     return decimal;
 }
-const int powerOfNum(const int& num, const int& power) {
+const unsigned long long powerOfNum(const unsigned long long& num, const short& power) {
     if (power > 0) {
-        int result = num;
-        for (int count = 1; count != power; ++count) {
+        unsigned long long result = num;
+        for (short count = 1; count < power; ++count) {
             result *= num;
         }
         return result;
