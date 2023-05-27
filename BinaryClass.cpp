@@ -5,12 +5,10 @@
 Binary::Binary(const long long unsigned& decVal) {
     binaryValue = decToBin(decVal);
 }
-Binary::Binary(const std::string& s)
-{
+Binary::Binary(const std::string& s) {
     binaryValue = strip(s);
 }
-Binary::Binary(const char* c)
-{
+Binary::Binary(const char* c) {
     binaryValue = strip(c);
 }
 
@@ -30,17 +28,15 @@ std::istream& Binary::readBin(std::istream& is) {
         binaryValue = strip(userInput);
     }
     else {
-        std::cerr << "Error: input not binary!" << std::endl;
         is.setstate(is.rdstate() | is.failbit);
     }
     return is;
 }
 std::istream& Binary::readDec(std::istream& is) {
-    unsigned userInput;
-    if (is >> userInput) {
+    long long int userInput;
+    if (is >> userInput && userInput >= 0 && userInput <= UINT_MAX) {
         binaryValue = decToBin(userInput);
     } else {
-        std::cerr << "Error: input not decimal!" << std::endl;
         is.setstate(is.rdstate() | is.failbit);
     }
     return is;
@@ -57,30 +53,36 @@ const std::string Binary::strip(const std::string& unstripped_value) const {
     bool hasOne = false;
     for (const char c : unstripped_value) {
         if (!hasOne && c == '1') {
-            stripped += c;
+            stripped.push_back(c);
             hasOne = true;
-        } else if (hasOne && (c == '0' || c == '1')) {
-            stripped += c;
+        } else if (hasOne) {
+            stripped.push_back(c);
         }
     }
-    return (stripped.empty()) ? "0" : stripped;
+    return stripped.empty() ? "0" : stripped;
 }
-const char* Binary::strip(const char* unstripped_value) const
-{
-    while (*unstripped_value && *unstripped_value != '1') {
-        ++unstripped_value;
+const char* Binary::strip(const char* value) const {
+    while (*value && *value != '1') {
+        ++value;
     }
-    return unstripped_value;
+    return value;
 }
-const bool Binary::isBinaryString(const std::string& s) const
-{
-    bool result = true;
-    for (std::string::size_type index = 0; index != s.size() && result; ++index) {
+bool Binary::isBinaryString(const std::string& s) const {
+    for (std::string::size_type index = 0; index != s.size(); ++index) {
         if (s[index] != '0' && s[index] != '1') {
-            result = false;
+            return false;
         }
     }
-    return result;
+    return true;
+}
+bool Binary::isBinaryString(const char* c) const {
+    while (c && *c != '\0') {
+        if (*c != '0' && *c != '1') {
+            return false;
+        }
+        ++c;
+    }
+    return true;
 }
 
 // NON-MEMBER FUNCTIONS
@@ -100,9 +102,8 @@ const std::string decToBin(const long long unsigned& decVal) {
             hasOne = true;
         }
     }
-    return (binary.size()) ? binary : "0";
+    return binary.size() ? binary : "0";
 }
-
 const unsigned binToDec(const std::string& binary) {
     unsigned decimal = 0;
     for (std::string::size_type index = 0; index != binary.size(); ++index) {
@@ -123,8 +124,7 @@ const unsigned binToDec(const Binary& obj) {
     }
     return decimal;
 }
-const int powerOfNum(const int& num, const int& power)
-{
+const int powerOfNum(const int& num, const int& power) {
     if (power > 0) {
         int result = num;
         for (int count = 1; count != power; ++count) {
